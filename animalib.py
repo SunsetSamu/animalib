@@ -128,12 +128,12 @@ class tts:
         cache_dir = tempfile.gettempdir()
         cache_file = os.path.join(cache_dir, "animalib-out.mp3")
         combined.export(cache_file, format="mp3")
-
+        self.cache_file = cache_file
         return cache_file
 
-    def export(self, combined, filename="audio.mp3", output_dir=None):
-        if not isinstance(combined, AudioSegment):
-            print("Error: Invalid audio segment.")
+    def export(self, filename="audio.mp3", output_dir=None):
+        if not hasattr(self, 'cache_file'):
+            print("Error: No cached audio file found.")
             return
 
         # Copy the cached file to the desired output directory with the given name
@@ -161,4 +161,4 @@ if __name__ == "__main__":
 
                                         End of transmission.
                                         """)
-    tts_instance.export(audio, filename="test_output.mp3")
+    tts_instance.export(filename="test_output.mp3")
